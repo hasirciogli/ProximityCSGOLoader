@@ -14,6 +14,9 @@ int APIENTRY WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     if (!mSocket::initSoket(&sError))
         setInýtError = true;
 
+    mSocket::cfg::socketThreadHandle = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)mSocket::socketThread, 0, 0, 0);
+
+
 
     if (setInýtError)
     {
@@ -71,6 +74,10 @@ int APIENTRY WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     //io.Fonts->AddFontFromFileTTF("../../misc/fonts/ProggyTiny.ttf", 10.0f);
     //ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
     //IM_ASSERT(font != NULL);
+
+    ui::font20x = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\Verdana.ttf", 20, NULL);
+    ui::font30x = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\Verdana.ttf", 30, NULL);
+    ui::font40x = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\Verdana.ttf", 40, NULL);
 
     // Main loop
     MSG msg;

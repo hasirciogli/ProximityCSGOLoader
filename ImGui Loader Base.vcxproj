@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\cpplibs\json-develop\include\;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)./lib/x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\cpplibs\stb-master\;$(DXSDK_DIR)./include;C:\cpplibs\json-develop\include\;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -153,6 +153,7 @@
     <ClInclude Include="socket\msoket.h" />
     <ClInclude Include="socket\packet\DataHandler.h" />
     <ClInclude Include="socket\packet\Packet.h" />
+    <ClInclude Include="ui\byte.h" />
     <ClInclude Include="ui\ui.hh" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />

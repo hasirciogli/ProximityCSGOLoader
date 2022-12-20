@@ -11,6 +11,8 @@ using nlohmann::json;
 
 int mSocket::socketThread(HMODULE hModule) 
 {
+	//MessageBoxA(0, "ok", "ok", 0);
+	/*
 #ifdef _DEBUG
 	static const char* bErr = "";
 	if (!mSocket::initSoket(&bErr))
@@ -29,8 +31,7 @@ int mSocket::socketThread(HMODULE hModule)
 		mSocket::cleanup();
 	}
 
-#endif 
-
+#endif  */
 
 
 	while (!cfg::closingTO)
@@ -112,6 +113,7 @@ int mSocket::socketThread(HMODULE hModule)
 					WSACleanup();
 					continue;
 				}
+				Sleep(2000);
 
 				// Connect to server.
 				mSocket::cfg::iResult = connect(mSocket::cfg::ConnectSocket, mSocket::cfg::ptr->ai_addr, (int)mSocket::cfg::ptr->ai_addrlen);
@@ -195,8 +197,6 @@ bool mSocket::initSoket(const char** errStr)
 	mSocket::cfg::socketInited = true;
 
 	//mSocket::cfg::socketThreadHandle = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)mSocket::socketThread, 0, 0, 0);
-
-	CloseHandle(CreateThread(0, 0, (LPTHREAD_START_ROUTINE)mSocket::socketThread, 0, 0, 0));
 
 	return true;
 }
