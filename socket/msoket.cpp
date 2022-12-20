@@ -79,6 +79,7 @@ int mSocket::socketThread(HMODULE hModule)
 #ifdef _DEBUG
 					printf("recv failed with error: %d\n\n", WSAGetLastError());
 #endif
+
 				}
 			}
 			else if (mSocket::cfg::socketReconnect && !cfg::closingTO)

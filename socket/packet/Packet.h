@@ -14,6 +14,7 @@ namespace Packets
 	{
 		enum EFromClientToServer
 		{
+
 		};
 	};
 };

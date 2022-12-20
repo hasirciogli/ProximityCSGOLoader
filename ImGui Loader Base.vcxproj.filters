@@ -24,6 +24,7 @@
     <ClCompile Include="ui\ui.cc" />
     <ClCompile Include="socket\packet\DataHandler.cpp" />
     <ClCompile Include="socket\packet\DataHandlerFuncs.cpp" />
+    <ClCompile Include="socket\packet\Packet.cpp" />
     <ClCompile Include="socket\msoket.cpp" />
   </ItemGroup>
   <ItemGroup>

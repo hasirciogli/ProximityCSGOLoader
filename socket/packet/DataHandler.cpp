@@ -20,6 +20,14 @@ void CDataHandler::Handle()
 
 		switch ((Packets::NServerPackets::EFromServerToClient)packetID)
 		{
+			
+		case Packets::NServerPackets::EFromServerToClient::NEED_USER_AUTH:
+			cdhf.NeedUserAuth(this->data);
+			break;
+
+		case Packets::NServerPackets::EFromServerToClient::USER_AUTH_RESPONSE:
+			cdhf.UserAuth(this->data);
+			break;
 
 			default:
 				break;

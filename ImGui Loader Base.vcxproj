@@ -138,6 +138,7 @@
     <ClCompile Include="socket\msoket.cpp" />
     <ClCompile Include="socket\packet\DataHandler.cpp" />
     <ClCompile Include="socket\packet\DataHandlerFuncs.cpp" />
+    <ClCompile Include="socket\packet\Packet.cpp" />
     <ClCompile Include="ui\ui.cc" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_demo.cpp" />
