@@ -65,7 +65,7 @@ void ui::render() {
         ImGui::BeginChild("#connecting_state", window_size);
         {
 
-    }
+		}
         ImGui::EndChild();
     }
     ImGui::End();
