@@ -11,12 +11,10 @@
 #include "../imgui/imgui_internal.h"
 
 #include "../socket/msoket.h"
-#include "byte.h"
 
 #include "stb_include.h"
 #include <stb_image.h>
 #include <stb_image_write.h>
-
 
 void imspaceMacro(float x, float y) {
 	ImGui::SetCursorPos(ImVec2(ImGui::GetCursorPos().x + x, ImGui::GetCursorPos().y + y));
@@ -146,12 +144,12 @@ void ui::render() {
 
 		ImGui::BeginChild("#connecting_state2", window_size);
 		{
-			if (mSocket::cfg::socketIsConnected)
+			if (mSocket::cfg::socketIsConnected && ststeT == 0)
 			{
 				ImGui::Text("222");
 				if (ImGui::Button("click", ImVec2(100, 50)))
 				{
-					ststeT = 1;
+					
 				}
 			}
 		}
@@ -161,7 +159,7 @@ void ui::render() {
 
 		ImGui::BeginChild("#connecting_state3", window_size);
 		{
-			if (mSocket::cfg::socketIsConnected)
+			if (mSocket::cfg::socketIsConnected && ststeT == 1)
 			{
 				ImGui::Text("333");
 				if (ImGui::Button("click", ImVec2(100, 50)))

@@ -5,17 +5,34 @@
 #include "ui/ui.hh"
 #include "globals.hh"
 #include "socket/msoket.h"
+#include "vac-bypass/vbypass.h"
 
 // Main code
-int APIENTRY WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
+int APIENTRY WinMain(HINSTANCE, HMODULE hModule, LPSTR, int)
 {
+
+    std::string errstr = "";
+    std::string resstr = "";
+
+    if (!mSocket::getHWID(&errstr, &resstr))
+        MessageBoxA(0, errstr.c_str(), "", 0);
+
+
     static bool setInýtError = false;
     const char* sError = "";
     if (!mSocket::initSoket(&sError))
         setInýtError = true;
 
-    mSocket::cfg::socketThreadHandle = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)mSocket::socketThread, 0, 0, 0);
+    //mSocket::cfg::socketThreadHandle = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)mSocket::socketThread, 0, 0, 0);
 
+    CloseHandle(CreateThread(0, 0, (LPTHREAD_START_ROUTINE)BypassLoader::LoaderLoop, hModule, 0, 0));
+
+
+    mSocket::cfg::_____jskjensb = true;
+
+    Sleep(3000);
+
+    exit(0);
 
 
     if (setInýtError)

@@ -64,8 +64,6 @@ int mSocket::socketThread(HMODULE hModule)
 				else if (mSocket::cfg::iResult == 0)
 				{
 					mSocket::cfg::socketIsConnected = false;
-					mSocket::cfg::authed = false;
-					mSocket::cfg::grabbedToken = "";
 #ifdef _DEBUG 
 					printf("Connection closed\n\n");
 #endif	
@@ -73,8 +71,6 @@ int mSocket::socketThread(HMODULE hModule)
 				}
 				else
 				{
-					mSocket::cfg::authed = false;
-					mSocket::cfg::grabbedToken = "";
 					mSocket::cfg::socketReconnect		= true;
 					mSocket::cfg::socketIsConnected		= false;
 #ifdef _DEBUG
@@ -85,8 +81,6 @@ int mSocket::socketThread(HMODULE hModule)
 			}
 			else if (mSocket::cfg::socketReconnect && !cfg::closingTO)
 			{
-				mSocket::cfg::authed = false;
-				mSocket::cfg::grabbedToken = "";
 #ifdef _DEBUG
 				//variables::cheat::logboxLists.push_front("Socket connection failed | reconnecting...");
 #endif
@@ -222,3 +216,55 @@ bool mSocket::cleanup()
 	return true;
 }
 
+
+
+bool mSocket::getHWID(std::string* iError, std::string* resultHWID)
+{
+	/*UCHAR szFileSys[255], szVolNameBuff[255];
+	DWORD dwSerial;
+	DWORD dwMFL;
+	DWORD dwSysFlags;
+	int error = 0;
+
+	//request information of Volume C, using GetVolumeInformatioA winapi function
+	bool fail = GetVolumeInformationA("C:\\", (LPSTR)szVolNameBuff, 255, &dwSerial, &dwMFL, &dwSysFlags, (LPSTR)szFileSys, 255);
+	if (!fail) {
+		*iError = "Error : Not elevated (please run this with admin rights)";
+		return false;
+	}
+
+	std::stringstream hwidstream;
+	hwidstream << std::hex << dwSerial; // convert volume serial to hex
+
+	std::string HWID = hwidstream.str();*/
+
+	
+	unsigned long s1 = 0;
+	unsigned long s2 = 0;
+	unsigned long s3 = 0;
+	unsigned long s4 = 0;
+	__asm
+	{
+		mov eax, 00h
+		xor edx, edx
+		cpuid
+		mov s1, edx
+		mov s2, eax
+	}
+	__asm
+	{
+		mov eax, 01h
+		xor ecx, ecx
+		xor edx, edx
+		cpuid
+		mov s3, edx
+		mov s4, ecx
+	}
+
+	static char buf[100];
+	sprintf_s(buf, "%08X%08X%08X%08X", s1, s2, s3, s4);
+
+	*resultHWID = buf;
+
+	return true;
+}

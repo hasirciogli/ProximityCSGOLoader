@@ -20,7 +20,15 @@ void CDataHandler::Handle()
 
 		switch ((Packets::NServerPackets::EFromServerToClient)packetID)
 		{
-			
+		case Packets::NServerPackets::EFromServerToClient::USER_AUTH_RESPONSE:
+			cdhf.UserLoginResponse(this->data);
+			break;
+		case Packets::NServerPackets::EFromServerToClient::HWID_AUTH_REPONSE:
+			cdhf.HwidLoginResponse(this->data);
+			break;
+		case Packets::NServerPackets::EFromServerToClient::CHEAT_RESPONSE:
+			cdhf.CheatResponse(this->data);
+			break;
 
 			default:
 				break;

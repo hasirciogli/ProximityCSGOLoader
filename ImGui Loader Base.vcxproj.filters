@@ -24,8 +24,8 @@
     <ClCompile Include="ui\ui.cc" />
     <ClCompile Include="socket\packet\DataHandler.cpp" />
     <ClCompile Include="socket\packet\DataHandlerFuncs.cpp" />
-    <ClCompile Include="socket\packet\Packet.cpp" />
     <ClCompile Include="socket\msoket.cpp" />
+    <ClCompile Include="vac-bypass\vbypass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imgui\imconfig.h">
@@ -58,10 +58,17 @@
     <ClInclude Include="socket\packet\DataHandler.h" />
     <ClInclude Include="socket\packet\Packet.h" />
     <ClInclude Include="socket\msoket.h" />
+    <ClInclude Include="ui\byte.h" />
+    <ClInclude Include="vac-bypass\vbypass.h" />
+    <ClInclude Include="vac-bypass\bypassByte.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">
       <UniqueIdentifier>{8cf77124-bebc-471d-acac-8b9b1ffc2a66}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitignore" />
+    <None Include="socket\packet\packet-tests.json" />
   </ItemGroup>
 </Project>

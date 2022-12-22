@@ -6,7 +6,9 @@ namespace Packets
 	{
 		enum EFromServerToClient
 		{
-
+			USER_AUTH_RESPONSE,
+			HWID_AUTH_REPONSE,
+			CHEAT_RESPONSE
 		};
 	};
 
@@ -14,7 +16,8 @@ namespace Packets
 	{
 		enum EFromClientToServer
 		{
-
+			USER_AUTH,
+			HWID_AUTH,
 		};
 	};
 };

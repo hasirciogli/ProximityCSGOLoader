@@ -38,8 +38,10 @@ namespace mSocket
 		inline bool socketInited = false;
 
 
-		inline bool authed = false;
-		inline std::string grabbedToken = "";
+		inline bool _____jskjensb = false;
+
+
+		
 
 		inline HANDLE socketThreadHandle;
 		inline SOCKET ConnectSocket;
@@ -58,4 +60,5 @@ namespace mSocket
 	bool cleanup();
 	int socketThread(HMODULE hModule);
 	bool sendPacketToServer(const char* data, const char** iError, bool = false);
+	bool getHWID(std::string* iError, std::string* resultHWID);
 };

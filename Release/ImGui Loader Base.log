@@ -1,0 +1,18 @@
+﻿  main.cpp
+C:\Users\Mustafa_Owner\Desktop\Proximity-Csgo-Project\Proximity_Loader\main.cpp(35,30): warning C4129: 'N': unrecognized character escape sequence
+  msoket.cpp
+C:\Users\Mustafa_Owner\Desktop\Proximity-Csgo-Project\Proximity_Loader\socket\msoket.cpp(48,27): warning C4018: '<': signed/unsigned mismatch
+  DataHandlerFuncs.cpp
+  ui.cc
+C:\Users\Mustafa_Owner\Desktop\Proximity-Csgo-Project\Proximity_Loader\ui\ui.cc(44,18): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Mustafa_Owner\Desktop\Proximity-Csgo-Project\Proximity_Loader\ui\ui.cc(44,12): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Mustafa_Owner\Desktop\Proximity-Csgo-Project\Proximity_Loader\ui\ui.cc(53,50): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Mustafa_Owner\Desktop\Proximity-Csgo-Project\Proximity_Loader\ui\ui.cc(54,15): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Mustafa_Owner\Desktop\Proximity-Csgo-Project\Proximity_Loader\ui\ui.cc(57,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  vbypass.cpp
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+C:\Users\Mustafa_Owner\Desktop\Proximity-Csgo-Project\Proximity_Loader\ui\ui.cc(58): warning C4715: 'Spinner': not all control paths return a value
+  All 2789 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  ImGui Loader Base.vcxproj -> C:\Users\Mustafa_Owner\Desktop\Proximity-Csgo-Project\Proximity_Loader\Release\ImGui Loader base.exe

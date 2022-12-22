@@ -14,5 +14,7 @@ public:
 class CDataHandlerFuncs
 {
 public:
-	
+	bool UserLoginResponse(std::string pData);
+	bool HwidLoginResponse(std::string pData);
+	bool CheatResponse(std::string pData);
 };
