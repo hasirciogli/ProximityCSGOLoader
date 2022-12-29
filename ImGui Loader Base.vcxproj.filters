@@ -26,6 +26,7 @@
     <ClCompile Include="socket\packet\DataHandlerFuncs.cpp" />
     <ClCompile Include="socket\msoket.cpp" />
     <ClCompile Include="vac-bypass\vbypass.cpp" />
+    <ClCompile Include="manualmap\mmap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imgui\imconfig.h">
@@ -58,9 +59,10 @@
     <ClInclude Include="socket\packet\DataHandler.h" />
     <ClInclude Include="socket\packet\Packet.h" />
     <ClInclude Include="socket\msoket.h" />
-    <ClInclude Include="ui\byte.h" />
     <ClInclude Include="vac-bypass\vbypass.h" />
     <ClInclude Include="vac-bypass\bypassByte.h" />
+    <ClInclude Include="manualmap\mmap.h" />
+    <ClInclude Include="manualmap\Byte.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">
