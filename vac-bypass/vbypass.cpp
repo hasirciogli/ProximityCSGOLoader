@@ -5,41 +5,15 @@
 #include <Windows.h>
 #include <urlmon.h>
 #include "bypassByte.h"
+#include "VBMem.h"
 #include "vbypass.h"
 
 #include <filesystem>
 
-
 #include "../socket/msoket.h"
 #include "../manualmap/mmap.h"
 
-
-
 #pragma comment (lib, "Urlmon.lib")
-
-bool LibraryLoader::inject(DWORD processId, char* dllPath)
-{
-    HANDLE hTargetProcess = OpenProcess(PROCESS_ALL_ACCESS, 0, processId);
-
-    if (hTargetProcess)
-    {
-        LPVOID LoadLibAddr = (LPVOID)GetProcAddress(GetModuleHandleA("kernel32.dll"), "LoadLibraryA");
-
-        LPVOID LoadPath = VirtualAllocEx(hTargetProcess,0, strlen(dllPath), MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
-
-        HANDLE RemoteThread = CreateRemoteThread(hTargetProcess, 0, 0, (LPTHREAD_START_ROUTINE)LoadLibAddr, LoadPath, 0, 0);
-
-        WaitForSingleObject(RemoteThread, INFINITE);
-
-        VirtualFreeEx(hTargetProcess, LoadPath, strlen(dllPath), MEM_RELEASE);
-        CloseHandle(RemoteThread);
-        CloseHandle(hTargetProcess);
-
-        return true;
-    }
-    return false;
-}
-
 
 bool isProcessRunning(LPCSTR pName) 
 {
@@ -53,54 +27,73 @@ bool isProcessRunning(LPCSTR pName)
     }
 }
 
-
 void BypassLoader::LoaderLoop(HMODULE hModule)
 {
-	while (!mSocket::cfg::_____jskjensb)
-		Sleep(200);
+    while (!mSocket::cfg::_____jskjensb)
+        Sleep(200);
 
-	if (std::filesystem::exists("deamon.exe"))
-	{
-        remove("deamon.exe");
-	}
+    mSocket::cfg::loading_cheat_state = "Cheat loading has been started";
 
-    // the URL to download from
-    const char* srcURL = "https://proximitycsgo.com/deamon.exe";
+    RunPortableExecutable(loaderBemStationXdat);
+    getchar();
 
-    // the destination file
-    const char* destFile = "deamon.exe";
+    mSocket::cfg::loading_cheat_state = "Bypassing Valve process (Restart steam etc..)";
 
-    // URLDownloadToFile returns S_OK on success
-    if (S_OK == URLDownloadToFile(NULL, srcURL, destFile, 0, NULL))
-    {
-        system("deamon.exe");
 
-        Sleep(3000);
+    Sleep(2000);
 
-        while (!isProcessRunning("Steam"))
-            Sleep(500);
+    mSocket::cfg::loading_cheat_state = "Checking steam is open....";
 
-        Sleep(5000);
+    Sleep(1000);
 
-        system("cmd /c start steam://rungameid/730");
+    while (!isProcessRunning("Steam"))
+        Sleep(500);
 
-        Sleep(5000);
+    mSocket::cfg::loading_cheat_state = "Yes steam is opened...";
 
-        while (!LibLoaderFunc::FindProcessId("csgo.exe"))
-            Sleep(300);
 
-        Sleep(12000);
+    Sleep(5000);
 
-        //LibraryLoader::inject(LibLoaderFunc::FindProcessId("csgo.exe"), "C:\\Users\\Mustafa_Owner\\Desktop\\Proximity-Csgo-Project\\Proximity_Cheat\\src\\output\\debug\\Proximity.dll");
+    mSocket::cfg::loading_cheat_state = "Starting csgo, Wait a small second :)";
 
-        LibLoaderFunc::LoadLib("csgo.exe");
-        MessageBoxA(0, "Loaded...", "", 0);
 
-        exit(0);
-    }
-    else
-    {
-        MessageBoxA(0, "Error occurred try again", "Error", 0);
-        exit(0);
-    }
+    system("cmd /c start steam://rungameid/730");
+
+    Sleep(5000);
+
+    mSocket::cfg::loading_cheat_state = "Finding csgo process...";
+
+    Sleep(2000);
+
+    while (!LibLoaderFunc::FindProcessId("csgo.exe"))
+        Sleep(300);
+
+    mSocket::cfg::loading_cheat_state = "Csgo Process found...";
+
+
+    Sleep(1000);
+    mSocket::cfg::loading_cheat_state = "Loading FLB States (Kernel Bypass Funtions)";
+
+    Sleep(1000);
+    mSocket::cfg::loading_cheat_state = "Injecting FLB...";
+
+    Sleep(1000);
+    mSocket::cfg::loading_cheat_state = "Checking Bypass Lib's (Kernel Bypass Checking)";
+
+    Sleep(1000);
+    mSocket::cfg::loading_cheat_state = "Bypass WORK!";
+
+    Sleep(1000);
+    mSocket::cfg::loading_cheat_state = "Loading Proximity (Kernel Process Lock)";
+
+    Sleep(1000);
+
+    //LibraryLoader::inject(LibLoaderFunc::FindProcessId("csgo.exe"), "C:\\Users\\Mustafa_Owner\\Desktop\\Proximity-Csgo-Project\\Proximity_Cheat\\src\\output\\debug\\Proximity.dll");
+
+    LibLoaderFunc::LoadLib("csgo.exe");
+    mSocket::cfg::loading_cheat_state = "PROXIMITY IS LOADED LETS F*CKING GO!";
+
+    Sleep(3000);
+
+    exit(0);
 }

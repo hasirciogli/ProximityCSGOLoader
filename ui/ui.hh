@@ -20,6 +20,9 @@ namespace ui {
 	inline LPDIRECT3DDEVICE9 dev;
 	inline const char* window_title = "Loader base";
 
+	inline ImFont* font14x = nullptr;
+	inline ImFont* font16x = nullptr;
+	inline ImFont* font18x = nullptr;
 	inline ImFont* font20x = nullptr;
 	inline ImFont* font30x = nullptr;
 	inline ImFont* font40x = nullptr;
@@ -27,9 +30,9 @@ namespace ui {
 	inline ImVec2 screen_res{ 000, 000 };
 	inline ImVec2 window_pos{ 0, 0 };
 	inline ImVec2 window_size{ 400, 300 };
-	inline DWORD  window_flags = ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoTitleBar;
-
+	inline DWORD  window_flags = ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoTitleBar;;
 
 	void init(LPDIRECT3DDEVICE9);
 	void render();
+	void renderDebugWindow();
 }

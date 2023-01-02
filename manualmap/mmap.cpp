@@ -381,9 +381,9 @@ void LibLoaderFunc::LoadLib(std::string processName)
 
 	hThread = CreateRemoteThread(hProcess, NULL, 0, (LPTHREAD_START_ROUTINE)((PMANUAL_INJECT)mem + 1), mem, 0, NULL);
 
-	Beep(400, 300);
+	//Beep(400, 300);
 
 	WaitForSingleObject(hThread, INFINITE);
 	GetExitCodeThread(hThread, &ExitCode);
-	ExitProcess(0);
+	//ExitProcess(0);
 }

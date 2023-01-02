@@ -1,94 +1,121 @@
 #include "msoket.h"
 
-#include <thread>
 #include <nlohmann/json.hpp>
 
 #include "packet/DataHandler.h"
+
+#include <iostream>
+#include <string>
+
+#include "procr/ProCr.h"
+#include <future>
+
+#include "packet/Packet.h"
+
+#undef UTF8_WINAPI
+#define UTF8_WINAPI
 
 int bebeka = 0;
 
 using nlohmann::json;
 
-int mSocket::socketThread(HMODULE hModule) 
+ProCr pc;
+
+void goWork(char* data2, int len)
 {
-	//MessageBoxA(0, "ok", "ok", 0);
-	/*
-#ifdef _DEBUG
-	static const char* bErr = "";
-	if (!mSocket::initSoket(&bErr))
+	mSocket::cfg::debugLogList.push_back(data2);
+	std::string recvData = "";
+	std::copy(data2, data2 + len, std::back_inserter(recvData));
+
+	static bool hwidLoginSend = false;
+
+	if (mSocket::cfg::socketNeedProxiAuth)
 	{
-		//variables::cheat::logboxLists.push_front(bErr);
-		std::cout << "" << bErr << std::endl;
-		mSocket::cleanup();
+		if (pc.Validate(recvData))
+			mSocket::cfg::socketNeedProxiAuth = false;
+		else
+			mSocket::cleanup(true);
+
+
+		if (!hwidLoginSend)
+		{
+			mSocket::sendHwidLogin();
+			hwidLoginSend = true;
+		}
+
+		return;
 	}
+
 	
-#else
 
+	CDataHandler cdh = CDataHandler();
+	cdh.data = recvData;
+	cdh.Handle();
+}
+
+int mSocket::socketThread(HMODULE hModule)
+{
+#if insideinitonsocket
 	static const char* bErr = "";
 	if (!mSocket::initSoket(&bErr))
 	{
-		openLink("Server connection eror");
 		mSocket::cleanup();
+		return;
 	}
-
-#endif  */
+#endif
 
 
 	while (!cfg::closingTO)
 	{
-		if (mSocket::cfg::socketInited && !cfg::closingTO) 
-		{ 
+		if (mSocket::cfg::socketInited && !cfg::closingTO)
+		{
 			if (mSocket::cfg::socketIsConnected && !cfg::closingTO)
 			{
-				mSocket::cfg::iResult = recv(mSocket::cfg::ConnectSocket, mSocket::cfg::recvbuf, mSocket::cfg::recvbuflen, 0);
+				int bResult = 0;
+				char recvbuf[8192] = "";
 
-				if (mSocket::cfg::iResult > 0)
+				bResult = recv(mSocket::cfg::ConnectSocket, recvbuf, 8192, 0);
+				if (bResult > 0)
 				{
-					std::string test = "";
-					for (size_t i = 0; i < mSocket::cfg::iResult; i++) 
-					{
-						test += mSocket::cfg::recvbuf[i];
-					}
-
-#ifdef _DEBUG
-					std::cout << "DR ["<< mSocket::cfg::iResult << "] - " << mSocket::cfg::recvbuf << std::endl;
-#endif
-
-					CDataHandler cdh = CDataHandler();
-					cdh.data = test;
-					cdh.Handle();
-
-					test = "";
-					mSocket::cfg::recvbuf[0] = {};
+					std::future<void> ret = std::async(std::launch::async, goWork, recvbuf, bResult);
 				}
 				else if (mSocket::cfg::iResult == 0)
 				{
 					mSocket::cfg::socketIsConnected = false;
-#ifdef _DEBUG 
-					printf("Connection closed\n\n");
-#endif	
-					
+					mSocket::cfg::socketNeedProxiAuth = true;
+					mSocket::cfg::authed = false;
+					mSocket::cfg::grabbedToken = "";
+//#ifdef _DEBUG 
+//					printf("Connection closed\n\n");
+//#endif	
 				}
 				else
 				{
-					mSocket::cfg::socketReconnect		= true;
-					mSocket::cfg::socketIsConnected		= false;
-#ifdef _DEBUG
-					printf("recv failed with error: %d\n\n", WSAGetLastError());
-#endif
+					mSocket::cfg::authed = false;
+					mSocket::cfg::grabbedToken = "";
+					mSocket::cfg::socketReconnect = true;
+					mSocket::cfg::socketIsConnected = false;
+					mSocket::cfg::socketNeedProxiAuth = true;
+//#ifdef _DEBUG
+//					printf("recv failed with error: %d\n\n", WSAGetLastError());
+//#endif
 
 				}
 			}
 			else if (mSocket::cfg::socketReconnect && !cfg::closingTO)
 			{
+				mSocket::cfg::authed = false;
+				mSocket::cfg::grabbedToken = "";
+				mSocket::cfg::socketNeedProxiAuth = true;
 #ifdef _DEBUG
-				//variables::cheat::logboxLists.push_front("Socket connection failed | reconnecting...");
+				//cfg::logboxLists.push_front("Socket connection failed | reconnecting...");
 #endif
 				bebeka++;
 				// Resolve the server address and port
 				mSocket::cfg::iResult = getaddrinfo(DEFAULT_IP, DEFAULT_PORT, &mSocket::cfg::hints, &mSocket::cfg::result);
 				if (mSocket::cfg::iResult != 0) {
 #ifdef _DEBUG
+					mSocket::cfg::socketNeedProxiAuth = true;
 					printf("getaddrinfo failed with error: %d\n\n", mSocket::cfg::iResult);
 #endif
 					WSACleanup();
@@ -101,13 +128,13 @@ int mSocket::socketThread(HMODULE hModule)
 					mSocket::cfg::ptr->ai_protocol);
 
 				if (mSocket::cfg::ConnectSocket == INVALID_SOCKET) {
+					mSocket::cfg::socketNeedProxiAuth = true;
 #ifdef _DEBUG
 					printf("socket failed with error: %ld\n\n", WSAGetLastError());
 #endif
 					WSACleanup();
 					continue;
 				}
-				Sleep(2000);
 
 				// Connect to server.
 				mSocket::cfg::iResult = connect(mSocket::cfg::ConnectSocket, mSocket::cfg::ptr->ai_addr, (int)mSocket::cfg::ptr->ai_addrlen);
@@ -120,6 +147,7 @@ int mSocket::socketThread(HMODULE hModule)
 				freeaddrinfo(mSocket::cfg::result);
 
 				if (mSocket::cfg::ConnectSocket == INVALID_SOCKET) {
+					mSocket::cfg::socketNeedProxiAuth = true;
 #ifdef _DEBUG
 					printf("Unable to connect to server!\n\n");
 #endif
@@ -128,10 +156,24 @@ int mSocket::socketThread(HMODULE hModule)
 					continue;
 				}
 
-				//variables::cheat::logboxLists.push_front("Connected!");
 				mSocket::cfg::socketIsConnected = true;
+				mSocket::cfg::socketNeedProxiAuth = true;
+				//cfg::logboxLists.push_front("Connected!");
+
+				if (cfg::socketNeedProxiAuth && mSocket::cfg::socketIsConnected)
+				{
+					const char* sError = "";
+					if (!sendPacketToServer(pc.GetData().c_str(), &sError))
+					{
+						closesocket(cfg::ConnectSocket);
+						cfg::socketIsConnected = false;
+						cleanup(false);
+					}
+				}
 			}
 		}
+
+		std::this_thread::sleep_for(std::chrono::milliseconds(20));
 	}
 
 	std::this_thread::sleep_for(std::chrono::milliseconds(50));
@@ -143,6 +185,9 @@ int mSocket::socketThread(HMODULE hModule)
 
 bool mSocket::sendPacketToServer(const char* data, const char** iError, bool force_send)
 {
+	//std::string needCryptData = std::string(data);
+	//needCryptData = mSocket::getEncrypt(needCryptData);
+
 	if (!mSocket::cfg::socketIsConnected)
 	{
 		*iError = "Socket isn't connected";
@@ -152,9 +197,9 @@ bool mSocket::sendPacketToServer(const char* data, const char** iError, bool for
 	mSocket::cfg::iResult = send(mSocket::cfg::ConnectSocket, data, (int)strlen(data), 0);
 	if (mSocket::cfg::iResult == SOCKET_ERROR) {
 
-		mSocket::cfg::socketIsConnected				= false;
+		mSocket::cfg::socketIsConnected = false;
 		//mSocket::cfg::socketReconnect				= true;
-		mSocket::cfg::socketReconnect				= false;
+		mSocket::cfg::socketReconnect = false;
 		closesocket(mSocket::cfg::ConnectSocket);
 
 		*iError = "mSocket::cfg::iResult == SOCKET_ERROR";
@@ -162,11 +207,10 @@ bool mSocket::sendPacketToServer(const char* data, const char** iError, bool for
 		//WSACleanup();
 		return false;
 	}
-
+	cfg::debugLogList.push_back("Packet sent-> " + std::string(data));
+	mSocket::cfg::waiting_response = true;
 	return true;
 }
-
-
 
 bool mSocket::initSoket(const char** errStr)
 {
@@ -178,7 +222,7 @@ bool mSocket::initSoket(const char** errStr)
 	}
 
 	mSocket::cfg::iResult = WSAStartup(MAKEWORD(2, 2), &mSocket::cfg::wsaData);
-	if (mSocket::cfg::iResult != 0) { 
+	if (mSocket::cfg::iResult != 0) {
 		*errStr = "Error -> Socket init failed" + mSocket::cfg::iResult;
 		return false;
 	}
@@ -189,20 +233,17 @@ bool mSocket::initSoket(const char** errStr)
 	mSocket::cfg::hints.ai_protocol = IPPROTO_TCP;
 
 	mSocket::cfg::socketInited = true;
-
 	//mSocket::cfg::socketThreadHandle = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)mSocket::socketThread, 0, 0, 0);
-
 	return true;
 }
 
-
-bool mSocket::cleanup()
+bool mSocket::cleanup(bool fuck)
 {
-	mSocket::cfg::closingTO				= true;
-	mSocket::cfg::socketReconnect		= false;
-	mSocket::cfg::socketIsConnected		= false;
+	mSocket::cfg::closingTO = true;
+	mSocket::cfg::socketReconnect = false;
+	mSocket::cfg::socketIsConnected = false;
 
-	printf("Cleanup called\n\n");
+	//printf("Cleanup called\n\n");
 
 	// Cleanup
 	closesocket(mSocket::cfg::ConnectSocket);
@@ -210,13 +251,18 @@ bool mSocket::cleanup()
 
 	mSocket::cfg::ConnectSocket = INVALID_SOCKET;
 
-	if (mSocket::cfg::socketThreadHandle)
-		CloseHandle(mSocket::cfg::socketThreadHandle);
+	if (fuck)
+	{
+		mSocket::cfg::authed = false;
+		mSocket::cfg::socketIsConnected = false;
+		mSocket::cfg::grabbedToken = "";
+	}
+
+	//if (mSocket::cfg::socketThreadHandle)
+	//	CloseHandle(mSocket::cfg::socketThreadHandle);
 
 	return true;
 }
-
-
 
 bool mSocket::getHWID(std::string* iError, std::string* resultHWID)
 {
@@ -238,7 +284,7 @@ bool mSocket::getHWID(std::string* iError, std::string* resultHWID)
 
 	std::string HWID = hwidstream.str();*/
 
-	
+
 	unsigned long s1 = 0;
 	unsigned long s2 = 0;
 	unsigned long s3 = 0;
@@ -267,4 +313,59 @@ bool mSocket::getHWID(std::string* iError, std::string* resultHWID)
 	*resultHWID = buf;
 
 	return true;
+}
+
+std::string mSocket::getEncrypt(std::string plaintext)
+{
+	// Anahtar deðerini belirtin
+	std::string key = "PCMK";
+
+	// Þifrelenmiþ veri için yer ayýrýn
+	std::string ciphertext;
+
+	// Þifreleme iþlemini gerçekleþtirin
+	for (int i = 0; i < plaintext.length(); i++) {
+		ciphertext += plaintext[i] ^ key[i % key.length()];
+	}
+
+	return ciphertext;
+}
+
+void mSocket::sendHwidLogin()
+{
+
+	mSocket::cfg::logging_in_hwid = true;
+
+	std::string cHwidErr = "";
+	std::string cHwid = "";
+	if (!mSocket::getHWID(&cHwidErr, &cHwid))
+	{
+		MessageBoxA(0, "Hwid Generator Error", "HWID PARSER", 0);
+		mSocket::cleanup();
+		exit(0);
+	}
+
+	json loginJsonData = json();
+
+	loginJsonData["who_i_am"] = (std::string)"loader";
+	loginJsonData["packet_id"] = (int)Packets::NClientPackets::EFromClientToServer::HWID_AUTH;
+	loginJsonData["data"]["hwid"] = (std::string)cHwid;
+
+	std::string sendLon = loginJsonData.dump();
+
+	const char* sError = "";
+	if (!mSocket::sendPacketToServer(sendLon.c_str(), &sError))
+	{
+		mSocket::cfg::logging_in_hwid = false;
+		mSocket::cfg::logging_in = false;
+		mSocket::cfg::logging_in_err = sError;
+
+		MessageBoxA(0, "Server Packing Error", "SERVER ERROR", 0);
+		mSocket::cleanup();
+		exit(0);
+	}
+	else
+	{
+
+	}
 }

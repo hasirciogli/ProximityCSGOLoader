@@ -25,13 +25,16 @@ int APIENTRY WinMain(HINSTANCE, HMODULE hModule, LPSTR, int)
     const char* sError = "";
 
     if (!mSocket::initSoket(&sError))
-        setInýtError = true;
+    {
+        MessageBoxA(0, "Connection was corrupted...", "Connection error", 0);
+        exit(0);
+    }
 
     mSocket::cfg::socketThreadHandle = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)mSocket::socketThread, 0, 0, 0);
 
     CloseHandle(CreateThread(0, 0, (LPTHREAD_START_ROUTINE)BypassLoader::LoaderLoop, hModule, 0, 0));
 
-    mSocket::cfg::_____jskjensb = true;
+    //mSocket::cfg::_____jskjensb = true;
 
     if (setInýtError)
     {
@@ -67,7 +70,7 @@ int APIENTRY WinMain(HINSTANCE, HMODULE hModule, LPSTR, int)
     ImGuiStyle& style = ImGui::GetStyle();
     if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
     {
-        style.WindowRounding = 0.0f;
+        style.WindowRounding = 10;
         style.Colors[ImGuiCol_WindowBg].w = 1.0f;
     }
 
@@ -90,9 +93,29 @@ int APIENTRY WinMain(HINSTANCE, HMODULE hModule, LPSTR, int)
     //ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
     //IM_ASSERT(font != NULL);
 
-    ui::font20x = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\Verdana.ttf", 20, NULL);
-    ui::font30x = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\Verdana.ttf", 30, NULL);
-    ui::font40x = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\Verdana.ttf", 40, NULL);
+    static const ImWchar icons_ranges_Turkish[] = {
+            0x0020, 0x00FF, // Basic Latin + Latin Supplement
+            0x00c7, 0x00c7, // Ç
+            0x00e7, 0x00e7, // ç
+            0x011e, 0x011e, // Ð
+            0x011f, 0x011f, // ð
+            0x0130, 0x0130,// Ý
+            0x0131, 0x0131, // ý
+            0x00d6, 0x00d6, // Ö
+            0x00f6, 0x00f6, // ö
+            0x015e, 0x015e, // Þ
+            0x015f, 0x015f, // þ
+            0x00dc, 0x00dc, // Ü
+            0x00fc, 0x00fc, // ü
+
+            0, };
+
+    ui::font14x = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\Verdana.ttf", 14, 0, icons_ranges_Turkish);
+    ui::font16x = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\Verdana.ttf", 16, 0, icons_ranges_Turkish);
+    ui::font18x = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\Verdana.ttf", 18, 0, icons_ranges_Turkish);
+    ui::font20x = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\Verdana.ttf", 20, 0, icons_ranges_Turkish);
+    ui::font30x = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\Verdana.ttf", 30, 0, icons_ranges_Turkish);
+    ui::font40x = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\Verdana.ttf", 40, 0, icons_ranges_Turkish);
 
     // Main loop
     MSG msg;

@@ -74,6 +74,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LibraryPath>$(DXSDK_DIR)./lib/x86;$(LibraryPath)</LibraryPath>
     <IncludePath>C:\cpplibs\stb-master\;$(DXSDK_DIR)./include;C:\cpplibs\json-develop\include\;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <TargetName>Proximity Loader.exe</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>C:\cpplibs\stb-master\;$(DXSDK_DIR)./include;C:\cpplibs\json-develop\include\;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
@@ -88,6 +89,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <ExceptionHandling>false</ExceptionHandling>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -145,6 +147,7 @@
     <ClCompile Include="socket\msoket.cpp" />
     <ClCompile Include="socket\packet\DataHandler.cpp" />
     <ClCompile Include="socket\packet\DataHandlerFuncs.cpp" />
+    <ClCompile Include="socket\procr\ProCr.cpp" />
     <ClCompile Include="ui\ui.cc" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_demo.cpp" />
@@ -163,6 +166,7 @@
     <ClInclude Include="socket\msoket.h" />
     <ClInclude Include="socket\packet\DataHandler.h" />
     <ClInclude Include="socket\packet\Packet.h" />
+    <ClInclude Include="socket\procr\ProCr.h" />
     <ClInclude Include="ui\ui.hh" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />
@@ -174,6 +178,7 @@
     <ClInclude Include="imgui\imstb_truetype.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="vac-bypass\bypassByte.h" />
+    <ClInclude Include="vac-bypass\VBMem.h" />
     <ClInclude Include="vac-bypass\vbypass.h" />
   </ItemGroup>
   <ItemGroup>

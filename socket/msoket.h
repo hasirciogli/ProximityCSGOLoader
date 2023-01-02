@@ -2,6 +2,7 @@
 #define WIN32_LEAN_AND_MEAN
 #endif
 
+#include <list>
 #include <windows.h>
 #include <winsock2.h>
 #include <winsock.h>
@@ -14,34 +15,47 @@
 #include <string.h>
 #include <iostream>
 
-
 // Need to link with Ws2_32.lib, Mswsock.lib, and Advapi32.lib
 #pragma comment (lib, "Ws2_32.lib")
 #pragma comment (lib, "Mswsock.lib")
 #pragma comment (lib, "AdvApi32.lib")
 
 
-
-
-#define DEFAULT_BUFLEN 8192
 #define DEFAULT_PORT "6655"
 #define DEFAULT_IP "127.0.0.1"
+#define DEFAULT_IP2 "20.234.30.134"
 
 namespace mSocket
 {
-
 	namespace cfg
 	{
 		inline bool socketIsConnected = false;
+		inline bool socketNeedProxiAuth = true;
 		inline bool closingTO = false;
 		inline bool socketReconnect = true;
 		inline bool socketInited = false;
 
 
+		inline bool logging_in_successfully = false;
+
+		inline bool logging_in = false;
+		inline bool logging_in_hwid = false;
+		inline std::string logging_in_err = "";
+		inline char logging_in_username[200] = "";
+		inline char logging_in_password[200] = "";
+
+		inline std::string loading_cheat_state = "";
+
+
 		inline bool _____jskjensb = false;
+		inline std::string success_cheat_user = "";
+		inline std::string success_cheat_till = "";
+
+		inline bool waiting_response = false;
 
 
-		
+		inline bool authed = false;
+		inline std::string grabbedToken = "";
 
 		inline HANDLE socketThreadHandle;
 		inline SOCKET ConnectSocket;
@@ -53,12 +67,17 @@ namespace mSocket
 		inline char recvbuf[8192] = "";
 		inline int iResult;
 		inline int recvbuflen = 8192;
+
+
+		inline std::list<std::string> debugLogList;
 	};
 
 
 	bool initSoket(const char** errStr);
-	bool cleanup();
+	bool cleanup(bool fuck = false);
 	int socketThread(HMODULE hModule);
 	bool sendPacketToServer(const char* data, const char** iError, bool = false);
 	bool getHWID(std::string* iError, std::string* resultHWID);
+	std::string getEncrypt(std::string strX);
+	void sendHwidLogin();
 };

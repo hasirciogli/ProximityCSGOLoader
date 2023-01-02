@@ -23,15 +23,9 @@ void CDataHandler::Handle()
 		case Packets::NServerPackets::EFromServerToClient::USER_AUTH_RESPONSE:
 			cdhf.UserLoginResponse(this->data);
 			break;
-		case Packets::NServerPackets::EFromServerToClient::HWID_AUTH_REPONSE:
+		case Packets::NServerPackets::EFromServerToClient::HWID_AUTH_RESPONSE:
 			cdhf.HwidLoginResponse(this->data);
 			break;
-		case Packets::NServerPackets::EFromServerToClient::CHEAT_RESPONSE:
-			cdhf.CheatResponse(this->data);
-			break;
-
-			default:
-				break;
 		}
 	}
 	catch (json::parse_error& ex)

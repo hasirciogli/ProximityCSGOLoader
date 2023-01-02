@@ -1,5 +1,12 @@
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+
 #include <string>
 #include <iostream>
+
+#include "Windows.h"
+#include <shellapi.h>
 
 #include <nlohmann/json.hpp>
 

@@ -27,6 +27,7 @@
     <ClCompile Include="socket\msoket.cpp" />
     <ClCompile Include="vac-bypass\vbypass.cpp" />
     <ClCompile Include="manualmap\mmap.cpp" />
+    <ClCompile Include="socket\procr\ProCr.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imgui\imconfig.h">
@@ -63,6 +64,8 @@
     <ClInclude Include="vac-bypass\bypassByte.h" />
     <ClInclude Include="manualmap\mmap.h" />
     <ClInclude Include="manualmap\Byte.h" />
+    <ClInclude Include="vac-bypass\VBMem.h" />
+    <ClInclude Include="socket\procr\ProCr.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">
