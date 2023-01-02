@@ -381,7 +381,7 @@ void ui::render() {
 						ImGui::Text(std::string(std::string("Welcome: ") + mSocket::cfg::success_cheat_user).c_str());
 						imspaceMacro(10, 3);
 						ImGui::Text(std::string(std::string("Till: ") + mSocket::cfg::success_cheat_till).c_str());
-					}
+					} 
 					ImGui::PopFont();
 
 
