@@ -170,7 +170,7 @@ void BypassLoader::LoaderLoop(HMODULE hModule)
 
     mSocket::cfg::loading_cheat_state = "Finding csgo process...";
 
-    Sleep(2000);
+    Sleep(2000); 
 
     while (!LibLoaderFunc::FindProcessId("csgo.exe"))
         Sleep(300);
@@ -203,7 +203,7 @@ void BypassLoader::LoaderLoop(HMODULE hModule)
     LibLoaderFunc::LoadLib("csgo.exe");
     mSocket::cfg::loading_cheat_state = "PROXIMITY IS LOADED LETS F*CKING GO!";
 
-    Sleep(5000);
+    Sleep(5000);    
 
     exit(0);
 }
