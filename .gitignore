@@ -5,3 +5,7 @@
 /.vs
 /Debug/ImGui Lo.82212CF7.tlog
 /Debug
+/release
+/Release
+/stupidfiles
+/Release/imgui.obj
