@@ -22,8 +22,18 @@
 
 
 #define DEFAULT_PORT "6655"
+
+#define pRCVERTONIKAS 1.0
+
+
+#ifdef _RELEASE
+#define DEFAULT_IP "thecheatserver.proximitycsgo.com"
+#else
+
 #define DEFAULT_IP "127.0.0.1"
-#define DEFAULT_IP2 "20.234.30.134"
+
+#endif
+
 
 namespace mSocket
 {
@@ -75,6 +85,7 @@ namespace mSocket
 
 	bool initSoket(const char** errStr);
 	bool cleanup(bool fuck = false);
+	bool isConnected();
 	int socketThread(HMODULE hModule);
 	bool sendPacketToServer(const char* data, const char** iError, bool = false);
 	bool getHWID(std::string* iError, std::string* resultHWID);

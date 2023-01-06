@@ -24,4 +24,5 @@ public:
 	bool UserLoginResponse(std::string pData);
 	bool HwidLoginResponse(std::string pData);
 	bool CheatResponse(std::string pData);
+	void VersionResponse(std::string fullData);
 };

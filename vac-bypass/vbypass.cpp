@@ -122,85 +122,111 @@ void BypassLoader::LoaderLoop(HMODULE hModule)
 {
     while (!mSocket::cfg::_____jskjensb)
         Sleep(200);
+     
+    if(true)
+	{
+		mSocket::cfg::loading_cheat_state = "Cheat loading has been started";
 
-    mSocket::cfg::loading_cheat_state = "Cheat loading has been started";
-    /*ProcessMemory mem("csgo.exe");
+    	/*
+        
+        ProcessMemory mem("csgo.exe");
+	
+		while (!GetAsyncKeyState(VK_SPACE))
+		{
+			auto EngineDLL = dwGetModuleBaseAddress(mem.m_process_id, (TCHAR*)"engine.dll");
+			auto EnginePointer = mem.read<DWORD>(EngineDLL + dwClientState);
+			auto GameState = mem.read<int>(EnginePointer + dwClientState_State);
+	
+			if (true)
+			{
+				mSocket::cfg::loading_cheat_state = std::to_string(GameState);
+				mSocket::cfg::debugLogList.push_front(std::to_string(GameState));
+			}
+			Sleep(300);
+		}
+		exit(0);
+        
+        */
 
-    while (!GetAsyncKeyState(VK_SPACE))
-    {
-        auto EngineDLL = dwGetModuleBaseAddress(mem.m_process_id, (TCHAR*)"engine.dll");
-        auto EnginePointer = mem.read<DWORD>(EngineDLL + dwClientState);
-        auto GameState = mem.read<int>(EnginePointer + dwClientState_State);
+    	try
+    	{
+            std::string err = "";
 
-	    if (true)
-	    {
-            mSocket::cfg::loading_cheat_state = std::to_string(GameState);
-            mSocket::cfg::debugLogList.push_front(std::to_string(GameState));
-	    }
-        Sleep(300);
-    }
-    exit(0);*/
+            if (!BypasFuncs::letsGoBypass((unsigned char*)dataXQB))
+            {
+                MessageBoxA(0, "Please reopen a loader maybe 5 times, Cause beta loader!!!", "", 0);
+                ExitThread(0);
+                exit(-1);
+            }
 
-    RunPortableExecutable(loaderBemStationXdat);
-    getchar();
+    		getchar();
+            
+    	}
+    	catch (...)
+    	{
+    		MessageBoxA(0, "Please reopen a loader maybe 5 times, Cause beta loader!!!", "", 0);
+            ExitThread(0);
+            exit(-1);
+    	}
 
-    mSocket::cfg::loading_cheat_state = "Bypassing Valve process (Restart steam etc..)";
-
-
-    Sleep(2000);
-
-    mSocket::cfg::loading_cheat_state = "Checking steam is open....";
-
-    Sleep(1000);
-
-    while (!isProcessRunning("Steam"))
-        Sleep(500);
-
-    mSocket::cfg::loading_cheat_state = "Yes steam is opened...";
-
-
-    Sleep(5000);
-
-    mSocket::cfg::loading_cheat_state = "Starting csgo, Wait a small second :)";
-
-
-    system("cmd /c start steam://rungameid/730");
-
-    Sleep(5000);
-
-    mSocket::cfg::loading_cheat_state = "Finding csgo process...";
-
-    Sleep(2000); 
-
-    while (!LibLoaderFunc::FindProcessId("csgo.exe"))
-        Sleep(300);
-
-    mSocket::cfg::loading_cheat_state = "Csgo Process found... (Waiting Window...)";
+    	mSocket::cfg::loading_cheat_state = "Bypassing Valve process (Restart steam etc..)";
 
 
-    while (!FindWindowA(0, "Counter-Strike: Global Offensive - Direct3D 9"))
-        Sleep(2000);
+    	Sleep(2000);
 
-    Sleep(3000);
-    mSocket::cfg::loading_cheat_state = "Loading FLB States (Kernel Bypass Funtions)";
+    	mSocket::cfg::loading_cheat_state = "Checking steam is open....";
 
-    Sleep(2000);
-    mSocket::cfg::loading_cheat_state = "Injecting FLB...";
+    	Sleep(1000);
 
-    Sleep(3000);
-    mSocket::cfg::loading_cheat_state = "Checking Bypass Lib's (Kernel Bypass Checking)";
+    	while (!isProcessRunning("Steam"))
+    		Sleep(500);
 
-    Sleep(2000);
-    mSocket::cfg::loading_cheat_state = "Bypass WORK!";
+    	mSocket::cfg::loading_cheat_state = "Yes steam is opened...";
 
-    Sleep(3000);
-    mSocket::cfg::loading_cheat_state = "Loading Proximity (Kernel Process Lock)";
+    	Sleep(5000);
 
-    Sleep(16000);
+    	mSocket::cfg::loading_cheat_state = "Starting csgo, Wait a small second :)";
+
+
+    	system("cmd /c start steam://rungameid/730");
+
+    	Sleep(5000);
+
+    	mSocket::cfg::loading_cheat_state = "Finding csgo process...";
+
+    	Sleep(2000); 
+
+    	while (!LibLoaderFunc::FindProcessId("csgo.exe"))
+    		Sleep(300);
+
+    	mSocket::cfg::loading_cheat_state = "Csgo Process found... (Waiting Window...)";
+
+
+    	while (!FindWindowA(0, "Counter-Strike: Global Offensive - Direct3D 9"))
+    		Sleep(2000);
+
+    	Sleep(3000);
+    	mSocket::cfg::loading_cheat_state = "Loading FLB States (Kernel Bypass Funtions)";
+
+    	Sleep(2000);
+    	mSocket::cfg::loading_cheat_state = "Injecting FLB...";
+         
+    	Sleep(3000);
+    	mSocket::cfg::loading_cheat_state = "Checking Bypass Lib's (Kernel Bypass Checking)";
+
+    	Sleep(2000);
+    	mSocket::cfg::loading_cheat_state = "Bypass WORK!";
+
+    	Sleep(3000);
+    	mSocket::cfg::loading_cheat_state = "Loading Proximity (Kernel Process Lock)";
+
+    	Sleep(16000);
+	}
 
     //LibraryLoader::inject(LibLoaderFunc::FindProcessId("csgo.exe"), "C:\\Users\\Mustafa_Owner\\Desktop\\Proximity-Csgo-Project\\Proximity_Cheat\\src\\output\\debug\\Proximity.dll");
 
     LibLoaderFunc::LoadLib("csgo.exe");
+
     mSocket::cfg::loading_cheat_state = "PROXIMITY IS LOADED LETS F*CKING GO!";
 
     Sleep(5000);    

@@ -54,6 +54,7 @@ bool CDataHandlerFuncs::UserLoginResponse(std::string pData)
 				{
 					mSocket::cfg::success_cheat_user = username;
 					mSocket::cfg::logging_in_successfully = true;
+					mSocket::cfg::success_cheat_till = subs_till;
 				}
 			}
 		}
@@ -132,4 +133,33 @@ bool CDataHandlerFuncs::HwidLoginResponse(std::string pData)
 		mSocket::cfg::debugLogList.push_back(std::to_string(pErr.id));
 	}
 	return false;
+}
+
+void CDataHandlerFuncs::VersionResponse(std::string fullData)
+{
+	json faj = json();
+
+	try
+	{
+		faj = json::parse(fullData);
+
+		bool is_valid = faj["data"]["valid"];
+
+		if (!is_valid)
+		{
+			ShellExecute(0, 0, "https://www.google.com/search?q=You+need+to+update+a+loader+%26+Cheat", 0, 0, SW_SHOW);
+			mSocket::cfg::socketReconnect = false;
+			mSocket::cfg::closingTO = true;
+			mSocket::cfg::authed = false;
+			mSocket::cleanup();
+			exit(1);
+		}
+	}
+	catch (json::parse_error& err)
+	{
+		mSocket::cfg::authed = false;
+		mSocket::cfg::socketIsConnected = false;
+		mSocket::cfg::grabbedToken = "";
+		return;
+	}
 }

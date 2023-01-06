@@ -15,6 +15,7 @@
 #undef UTF8_WINAPI
 #define UTF8_WINAPI
 
+
 int bebeka = 0;
 
 using nlohmann::json;
@@ -88,6 +89,7 @@ int mSocket::socketThread(HMODULE hModule)
 //#ifdef _DEBUG 
 //					printf("Connection closed\n\n");
 //#endif	
+					mSocket::cfg::ConnectSocket = SOCKET_ERROR;
 				}
 				else
 				{
@@ -100,6 +102,7 @@ int mSocket::socketThread(HMODULE hModule)
 //					printf("recv failed with error: %d\n\n", WSAGetLastError());
 //#endif
 
+					mSocket::cfg::ConnectSocket = SOCKET_ERROR;
 				}
 			}
 			else if (mSocket::cfg::socketReconnect && !cfg::closingTO)
@@ -114,6 +117,7 @@ int mSocket::socketThread(HMODULE hModule)
 				// Resolve the server address and port
 				mSocket::cfg::iResult = getaddrinfo(DEFAULT_IP, DEFAULT_PORT, &mSocket::cfg::hints, &mSocket::cfg::result);
 				if (mSocket::cfg::iResult != 0) {
+					mSocket::cfg::ConnectSocket = SOCKET_ERROR;
 #ifdef _DEBUG
 					mSocket::cfg::socketNeedProxiAuth = true;
 					printf("getaddrinfo failed with error: %d\n\n", mSocket::cfg::iResult);
@@ -122,6 +126,7 @@ int mSocket::socketThread(HMODULE hModule)
 					continue;
 				}
 
+
 				cfg::ptr = cfg::result;
 				// Create a SOCKET for connecting to server
 				mSocket::cfg::ConnectSocket = socket(mSocket::cfg::ptr->ai_family, mSocket::cfg::ptr->ai_socktype,
@@ -129,6 +134,7 @@ int mSocket::socketThread(HMODULE hModule)
 
 				if (mSocket::cfg::ConnectSocket == INVALID_SOCKET) {
 					mSocket::cfg::socketNeedProxiAuth = true;
+					mSocket::cfg::ConnectSocket = SOCKET_ERROR;
 #ifdef _DEBUG
 					printf("socket failed with error: %ld\n\n", WSAGetLastError());
 #endif
@@ -140,7 +146,7 @@ int mSocket::socketThread(HMODULE hModule)
 				mSocket::cfg::iResult = connect(mSocket::cfg::ConnectSocket, mSocket::cfg::ptr->ai_addr, (int)mSocket::cfg::ptr->ai_addrlen);
 				if (mSocket::cfg::iResult == SOCKET_ERROR) {
 					closesocket(mSocket::cfg::ConnectSocket);
-					mSocket::cfg::ConnectSocket = INVALID_SOCKET;
+					mSocket::cfg::ConnectSocket = SOCKET_ERROR;
 					continue;
 				}
 
@@ -150,7 +156,8 @@ int mSocket::socketThread(HMODULE hModule)
 					mSocket::cfg::socketNeedProxiAuth = true;
 #ifdef _DEBUG
 					printf("Unable to connect to server!\n\n");
-#endif
+#endif				
+					mSocket::cfg::ConnectSocket = SOCKET_ERROR;
 					WSACleanup();
 					mSocket::cfg::socketIsConnected = false;
 					continue;
@@ -249,7 +256,7 @@ bool mSocket::cleanup(bool fuck)
 	closesocket(mSocket::cfg::ConnectSocket);
 	WSACleanup();
 
-	mSocket::cfg::ConnectSocket = INVALID_SOCKET;
+	mSocket::cfg::ConnectSocket = SOCKET_ERROR;
 
 	if (fuck)
 	{
@@ -348,6 +355,7 @@ void mSocket::sendHwidLogin()
 	json loginJsonData = json();
 
 	loginJsonData["who_i_am"] = (std::string)"loader";
+	loginJsonData["cver"] = (float)pRCVERTONIKAS;
 	loginJsonData["packet_id"] = (int)Packets::NClientPackets::EFromClientToServer::HWID_AUTH;
 	loginJsonData["data"]["hwid"] = (std::string)cHwid;
 
@@ -367,5 +375,30 @@ void mSocket::sendHwidLogin()
 	else
 	{
 
+	}
+}
+
+bool mSocket::isConnected() {
+
+	unsigned long mode = 0;
+	int result = ioctlsocket(mSocket::cfg::ConnectSocket, FIONREAD, &mode);
+	if (result == SOCKET_ERROR)
+	{
+		return false;
+		// Hata, hata kodunu alın ve uygun bir hata mesajı gösterin
+		return 0;
+	}
+
+	if (mode > 0)
+	{
+		return true;
+		// Soket okunabilir
+		std::cout << "Soket okunabilir" << std::endl;
+	}
+	else
+	{
+		return false;
+		// Soket okunamaz 
+		std::cout << "Soket okunamaz" << std::endl;
 	}
 }

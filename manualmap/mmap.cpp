@@ -265,10 +265,9 @@ int LibLoaderFunc::FindProcessId(string processName)
 	CloseHandle(processSnapshot);
 	return 0;
 }
-
+ 
 DWORD __stdcall LibraryLoader(LPVOID Memory)
 {
-
 	loaderdata* LoaderParams = (loaderdata*)Memory;
 
 	PIMAGE_BASE_RELOCATION pIBR = LoaderParams->BaseReloc;
@@ -321,7 +320,6 @@ DWORD __stdcall LibraryLoader(LPVOID Memory)
 			}
 			else
 			{
-
 				PIMAGE_IMPORT_BY_NAME pIBN = (PIMAGE_IMPORT_BY_NAME)((LPBYTE)LoaderParams->ImageBase + OrigFirstThunk->u1.AddressOfData);
 				DWORD Function = (DWORD)LoaderParams->fnGetProcAddress(hModule, (LPCSTR)pIBN->Name);
 				if (!Function)
@@ -381,7 +379,7 @@ void LibLoaderFunc::LoadLib(std::string processName)
 
 	hThread = CreateRemoteThread(hProcess, NULL, 0, (LPTHREAD_START_ROUTINE)((PMANUAL_INJECT)mem + 1), mem, 0, NULL);
 
-	//Beep(400, 300);
+	Beep(400, 300);
 
 	WaitForSingleObject(hThread, INFINITE);
 	GetExitCodeThread(hThread, &ExitCode);

@@ -26,6 +26,9 @@ void CDataHandler::Handle()
 		case Packets::NServerPackets::EFromServerToClient::HWID_AUTH_RESPONSE:
 			cdhf.HwidLoginResponse(this->data);
 			break;
+		case Packets::NServerPackets::EFromServerToClient::VERSION_RESP:
+			cdhf.VersionResponse(this->data);
+			break;
 		}
 	}
 	catch (json::parse_error& ex)
