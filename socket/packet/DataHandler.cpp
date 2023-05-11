@@ -9,7 +9,6 @@ void CDataHandler::Handle()
 	{
 		json jbbk;
 		jbbk = json::parse(this->data);
-	
 
 		int packetID = jbbk["packet_id"];
 

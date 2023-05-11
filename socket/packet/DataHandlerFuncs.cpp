@@ -15,10 +15,10 @@ bool CDataHandlerFuncs::UserLoginResponse(std::string pData)
 	{
 		jsp = json::parse(pData)["data"];
 
-		bool   isSuccess = jsp["isSuccess"];
-		bool   isBanned = jsp["isBanned"];
-		bool   subs_active = jsp["subs_active"];
-		bool   need_hwid_reset = jsp["need_hwid_reset"];
+		bool isSuccess = jsp["isSuccess"];
+		bool isBanned = jsp["isBanned"];
+		bool subs_active = jsp["subs_active"];
+		bool need_hwid_reset = jsp["need_hwid_reset"];
 		std::string uBanReason = jsp["uBanReason"];
 		std::string username = jsp["username"];
 		std::string subs_till = jsp["subs_till"];

@@ -15,6 +15,8 @@
 #include <string.h>
 #include <iostream>
 
+
+
 // Need to link with Ws2_32.lib, Mswsock.lib, and Advapi32.lib
 #pragma comment (lib, "Ws2_32.lib")
 #pragma comment (lib, "Mswsock.lib")
@@ -23,7 +25,7 @@
 
 #define DEFAULT_PORT "6655"
 
-#define pRCVERTONIKAS 1.0
+#define pRCVERTONIKAS 1.0f
 
 
 #ifdef _RELEASE
@@ -92,3 +94,4 @@ namespace mSocket
 	std::string getEncrypt(std::string strX);
 	void sendHwidLogin();
 };
+

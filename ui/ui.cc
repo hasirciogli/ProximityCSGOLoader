@@ -18,10 +18,6 @@
 #include "../socket/msoket.h"
 #include "../socket/packet/Packet.h"
 
-#include "stb_include.h"
-#include <stb_image.h>
-#include <stb_image_write.h>
-
 using nlohmann::json;
 
 void imspaceMacro(float x, float y) {

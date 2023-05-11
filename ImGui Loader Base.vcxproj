@@ -22,7 +22,7 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{82212CF7-C4EA-436C-ADD5-F7AD56122BF5}</ProjectGuid>
     <RootNamespace>ImGui Loader Base</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
     <ProjectName>Proximity Loader</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -73,7 +73,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LibraryPath>$(DXSDK_DIR)./lib/x86;$(LibraryPath);$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
-    <IncludePath>C:\cpplibs\stb-master\;$(DXSDK_DIR)./include;C:\cpplibs\json-develop\include\;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>D:\my-codes\libs\boost_1_82_0;C:\cpplibs\stb-master\;$(DXSDK_DIR)./include;C:\cpplibs\json-develop\include\;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <TargetName>Proximity Loader.exe</TargetName>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
@@ -90,7 +90,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <ExceptionHandling>Sync</ExceptionHandling>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_DEBUG</PreprocessorDefinitions>

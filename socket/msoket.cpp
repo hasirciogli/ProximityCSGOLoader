@@ -72,12 +72,12 @@ int mSocket::socketThread(HMODULE hModule)
 		{
 			if (mSocket::cfg::socketIsConnected && !cfg::closingTO)
 			{
-				int bResult = 0;
 				char recvbuf[8192] = "";
 
-				bResult = recv(mSocket::cfg::ConnectSocket, recvbuf, 8192, 0);
+				int bResult = recv(mSocket::cfg::ConnectSocket, recvbuf, 8192, 0);
 				if (bResult > 0)
 				{
+					recvbuf[bResult] = '\0';
 					std::future<void> ret = std::async(std::launch::async, goWork, recvbuf, bResult);
 				}
 				else if (mSocket::cfg::iResult == 0)
@@ -180,10 +180,10 @@ int mSocket::socketThread(HMODULE hModule)
 			}
 		}
 
-		std::this_thread::sleep_for(std::chrono::milliseconds(20));
+		std::this_thread::sleep_for(std::chrono::milliseconds(100));
 	}
 
-	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+	std::this_thread::sleep_for(std::chrono::milliseconds(150));
 
 	FreeLibraryAndExitThread(hModule, 0);
 
