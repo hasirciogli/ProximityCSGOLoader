@@ -25,7 +25,7 @@
 
 #define DEFAULT_PORT "6655"
 
-#define pRCVERTONIKAS 1.0f
+#define pRCVERTONIKAS "1.3"
 
 
 #ifdef _RELEASE
@@ -76,9 +76,9 @@ namespace mSocket
 		inline addrinfo* ptr;
 		inline addrinfo hints;
 
-		inline char recvbuf[8192] = "";
+		inline char recvbuf[100000] = "";
 		inline int iResult;
-		inline int recvbuflen = 8192;
+		inline int recvbuflen = 100000;
 
 
 		inline std::list<std::string> debugLogList;
@@ -94,4 +94,3 @@ namespace mSocket
 	std::string getEncrypt(std::string strX);
 	void sendHwidLogin();
 };
-

@@ -9,9 +9,9 @@
 #include <cstdlib> 
 #include <winuser.h> 
 #include <conio.h>
-#include<string>
-#include<locale.h>
-#include<ctime> 
+#include <string>
+#include <locale.h>
+#include <ctime> 
 #include "mmap.h"
 #include "Byte.h"
 #include <string>

@@ -72,9 +72,9 @@ int mSocket::socketThread(HMODULE hModule)
 		{
 			if (mSocket::cfg::socketIsConnected && !cfg::closingTO)
 			{
-				char recvbuf[8192] = "";
+				char recvbuf[100000] = "";
 
-				int bResult = recv(mSocket::cfg::ConnectSocket, recvbuf, 8192, 0);
+				int bResult = recv(mSocket::cfg::ConnectSocket, recvbuf, 100000, 0);
 				if (bResult > 0)
 				{
 					recvbuf[bResult] = '\0';
@@ -355,7 +355,7 @@ void mSocket::sendHwidLogin()
 	json loginJsonData = json();
 
 	loginJsonData["who_i_am"] = (std::string)"loader";
-	loginJsonData["cver"] = (float)pRCVERTONIKAS;
+	loginJsonData["cver"] = pRCVERTONIKAS;
 	loginJsonData["packet_id"] = (int)Packets::NClientPackets::EFromClientToServer::HWID_AUTH;
 	loginJsonData["data"]["hwid"] = (std::string)cHwid;
 

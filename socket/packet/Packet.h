@@ -8,6 +8,7 @@ namespace Packets
 		{
 			USER_AUTH_RESPONSE,
 			HWID_AUTH_RESPONSE,
+			CHEAT_BYTE_RESPONSE,
 			VERSION_RESP,
 		};
 	};

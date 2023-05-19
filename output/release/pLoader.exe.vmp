@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Document Version="2">
+    <Protection InputFileName="pLoader.exe" Options="1023944">
+        <Messages>
+            <Message Id="0">DEBUGGER KAPAT ALLAHINI SİKMİYİM MAVİ EKRANI ALIR OTURURSUN GÖTÜNÜN ÜZERİNE.</Message>
+            <Message Id="1">KENDİ PCNDE KAPAT ALLAHINI SİKMİYİM MAVİ EKRANI ALIR OTURURSUN GÖTÜNÜN ÜZERİNE.</Message>
+            <Message Id="2">DOSYAYI BOZUKS</Message>
+            <Message Id="3">SERİ NUMARAM BOZUK TEKRAR İNDİR :)</Message>
+        </Messages>
+        <Folders />
+        <Procedures>
+            <Procedure MapAddress="EntryPoint" Options="0" CompilationType="2" />
+        </Procedures>
+        <Objects />
+    </Protection>
+    <DLLBox>
+        <Folders />
+    </DLLBox>
+    <Script />
+    <LicenseManager ProductCode="KGXelvZsuXs=" Algorithm="RSA" Bits="4096" PublicExp="AAEAAQ==" PrivateExp="g2pZHhllkgkM1azbTu/BTmN5JDZP2Ep6lde0y6PVIQf+um9at1LO5JQga2e5D17rLthztbDdy4/Z+bqqEF7cK5fjimASJ08b5YDrFz46Na4g3reE+Yor/D3bIPAh0Mp8JqrdBm6eXxKC8zsit7df/mDQcPYCSi1i1VePnQdl8zazRwpFdlkZLDhl64YFkK3Lgj5dBl0bwGXWVC16y6nua3/4HCks0+yUvpNoCNlgoFXITCP1rZsQQ2Xmz4FNQUc6DclN/5gZBrd4XqHnueD4LH/IAQq3tolwwXka+smU4An83AQTwXquh7m3+3PmjEpqkCMNQxVwMUWKHBxJosoAZDs3dM5FY5M/nLui+uaHo40BiB3yp1lqwYcfqO1uNhKdgMumv2zuV51nPhEllCP/Xd4JGBJHXG6lEyJooTXWspGfzVNh6LMGE7hxsJBkFDHAlNd++Ci4Iei6rk90TXGfZgrb+WxLMrhopLtiZ1pDDx4S9GodYxMkp2zC7rDTvZLv15MjZm9RxYZ+OgUHQkVN7l245f+9SzO6h8UGPgcDVz+mxtL4MIHESnzz11u9MJCegjJfIq9kV4VAXD7odNHmuJnUyeYfPE1XwC+fPvRvtrD2gorKUGQ1Daf+GLb4fz1gBA5ddpYDum4da9bs5lKG2pU8x2bgEZw/vQ6WbBIQNxk=" Modulus="znKIpiQhG9a1BGRMzWrvYiaoHKqFDdI9ZBMpcQZZjFjnPGhZ4OKlBHL0M/CQRj/1FoS8DucepePt2IjK0NECraMWx7OwwzIUq9mQowqAkfN/T9Ab/RkuWE1p2J/CvUx6ZGkgqoRnnjcRjHOMgVHlKF7WawjYGh1c6QDHcBtQK5KdZelGEdX/z81ApAn45fcdlxQPyZISkNqx5T5zTGc0AkwjeCvxZuqvpO+oAUj4qLfA4U6ec9YDgCeIP/eJUAKGLF/ys6OD8D6imqCw5mQJXGb4+QJGbfKRsmwaMI4Rm/gTxYmp2ptyx0neYSbB/H7xkgt++d4r54nbgrVnZLJeeQnoSx82lrGyeNjiujzPA+4TzvB41Jv+gbua6ObB9Pm4JIF6M1ZmJ109oiopSLXPN50lGjnFBJKGWhnaNJkc8BAtU+ztAlNzm/vHfQI7x+OGTTegMyLRNrY8DcHcW48tgGwCpqWMmK6C+uUOFGHJUcOaycmfbCRSau0TJXEx8YQKbY5qEdxridCrmgC5tGKk0H4Xjg5Ugq84sNLr2395d17gXzs9GmMlIYZ7/NXNywYWmcamViedsnLT0zMASMuOMNgwMdCpr726JDTEQ9bZ49GZCAGmTX0pK5EBfmkdWim6Ik3733ZaC0eR3QMIdiPs8zfDAWWrYrWXB7FEAJPU8pE=">
+        <License Date="2023-05-12" CustomerName="Proximity Csgo Loader User" SerialNumber="jIfGhYoHcZoU5aN/hQdgTmRPFa7Be8k5LBAqHvhEA9GUkTzqQvbDFf2ekwOc3ZWaLZlbhrB/L3VzgJP+4Ubr4Ur8hzWo4mnPgEhL5UQKSgGgqI1zr+dN809YOvFqfDUaori33VlWQ4/HosDlu51XLZ4U66uIAkaGQ0HlrxZ+H7INsTBhFLUcOE6NIgdmh9KSPG1XiWdKHEILAwDu6aZnEODiss4Y532bNZ8XeS7mbjGgV+N9pKYXlCfzhDL8V2GuCt1+uBNqs1ux/vd5uJHMo86o7SCSe7GyFJzE5yntzjK99oW5g4ZbvQ1YhYBbpphIP+mnSBaErL85386lKZz6y/ncz9VlrY7f9rNz4y6J0ZBO8xZQOagqApOD1fQvA0zimpCQyhCaukgbW2gbbO1iKd97S7JBkIE78+GGiyfJkMiWzv7PaFJoY+0ssSYKUXqAI16FzdiOBn1l3L/MLPBd5G1jIiUH6ZCsC4JLwphWEQ5CCdxmbubJPikkAE1j8B7CagBUaqw4ecl3vpSIbm9Od0uO9wv2NYlzKhPkqtt+U0cMFggM5Y1xMoFmAyTJwnDeUz6P5RLS3D11XHGck4k1zpqpFVoRWDB96lqLJZaQFZmYdjnU3PmUjEGvc49atioMT3BcYUeggCAibJNHgRGaTBRuEVSD+hP1H4owJmg9vdA=" />
+    </LicenseManager>
+</Document>
